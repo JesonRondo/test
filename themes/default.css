@@ -1,0 +1,82 @@
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+ul,
+ol,
+li,
+input {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+input {
+    color: #666;
+    font: 12px/1 Helvetica,Tahoma,Arial,'SimSun',sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+a {
+    color: #666;
+    text-decoration: none;
+    outline: 0;
+}
+
+body {
+    background: #FFF;
+}
+
+.wrap {
+    position: relative;
+    width: 734px;
+    margin: 0 auto;
+    padding: 2px;
+    background: #F4F4F4;
+}
+
+.nav {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 120px;
+}
+
+.nav-li-a {
+    display: block;
+    border: 1px solid #F4F4F4;
+    border-right: none;
+    font: normal 14px/36px 'SimSun';
+    text-align: center;
+    color: #aaa;
+}
+
+.nav-li-a-select {
+    border: 1px solid #DADADA;
+    border-right: none;
+    background: #FFF;
+    color: #999;
+}
+
+.main {
+    margin-left: 119px;
+    border: 1px solid #DADADA;
+    background: #FFF;
+}
