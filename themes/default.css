@@ -44,6 +44,23 @@ body {
     background: #FFF;
 }
 
+.clearfix:after {
+    display: block;
+    clear: both;
+    height: 0;
+    font-size: 0;
+    content: '.';
+    visibility: hidden;
+}
+
+*html .clearfix {
+    zoom: 1;
+}
+
+*:first-child+html .clearfix {
+    zoom: 1;
+}
+
 .wrap {
     position: relative;
     width: 734px;
@@ -57,26 +74,209 @@ body {
     left: 2px;
     top: 2px;
     width: 120px;
+    z-index: 1;
+}
+
+.w20 {
+    width: 20%;
+}
+
+.w25 {
+    width: 25%;
+}
+
+.w100 {
+    width: 100%;
 }
 
 .nav-li-a {
     display: block;
-    border: 1px solid #F4F4F4;
-    border-right: none;
+    padding: 1px 0 1px 1px;
+    border: none;
+    color: #AAA;
     font: normal 14px/36px 'SimSun';
     text-align: center;
-    color: #aaa;
 }
 
 .nav-li-a-select {
+    padding: 0;
     border: 1px solid #DADADA;
     border-right: none;
     background: #FFF;
     color: #999;
 }
 
-.main {
+.box {
     margin-left: 119px;
+    padding: 15px 30px;
     border: 1px solid #DADADA;
     background: #FFF;
+    -webkit-perspective: 600px;
+}
+
+.box-tbtnbox {
+    position: relative;
+    height: 36px;
+    margin-bottom: 15px;
+}
+
+@-webkit-keyframes page-start-animate {
+    0% {
+        -webkit-transform: rotateX(-90deg);
+    }
+    
+    100% {
+        -webkit-transform: rotateX(0);
+    }
+}
+
+.page-start {
+    -webkit-animation: page-start-animate .25s linear;
+}
+
+@-webkit-keyframes page-end-animate {
+    0% {
+        -webkit-transform: rotateX(0);
+    }
+    
+    100% {
+        -webkit-transform: rotateX(90deg);
+    }
+}
+
+.page-end {
+    -webkit-animation: page-end-animate .25s linear;
+}
+
+.gamebtn {
+    position: absolute;
+    width: 201px;
+    background: url(images/btn.png) 0 0 no-repeat;
+    color: #FFF;
+    font: normal 14px/36px 'Microsoft YaHei';
+    text-align: center;
+    text-shadow: 1px 1px rgba(0,0,0,.2);
+}
+
+.gamebtn-left {
+    left: 0;
+}
+
+.gamebtn-right {
+    right: 0;
+}
+
+.pay-list {
+    padding: 5px 0;
+    border-top: 1px dashed #999;
+}
+
+.pay-list-li {
+    float: left;
+    font: normal 12px/32px 'SimSun';
+}
+
+.pay-list-radio {
+    margin-left: 10px;
+    margin-top: -4px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.pay-list-text {
+    width: 45px;
+    margin-top: -4px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 2px 5px;
+    border: 1px solid #CCC;
+    vertical-align: middle;
+    -webkit-transition: all .3s ease-in-out;
+       -moz-transition: all .3s ease-in-out;
+         -o-transition: all .3s ease-in-out;
+    outline: 0;
+}
+
+.pay-list-text:focus {
+    border: 1px solid #AAA;
+    box-shadow: 0 0 3px rgba(0,0,0,.2);
+}
+
+.pay-tip {
+    padding: 0 5px;
+    font: normal 12px/18px 'SimSun';
+}
+
+.pay-stit {
+    padding: 0 5px;
+    color: #666;
+    font: normal 14px/48px 'Microsoft YaHei';
+}
+
+.bank-icon {
+    display: inline-block;
+    padding-left: 32px;
+    background: url(images/bank.gif) no-repeat;
+    line-height: 32px;
+}
+
+.bank-icon-8 {
+    background-position: 0 0;
+}
+
+.bank-icon-9 {
+    background-position: 0 -32px;
+}
+
+.bank-icon-11 {
+    background-position: 0 -64px;
+}
+
+.bank-icon-10 {
+    background-position: 0 -96px;
+}
+
+.bank-icon-53 {
+    background-position: 0 -128px;
+}
+
+.bank-icon-13 {
+    background-position: 0 -160px;
+}
+
+.bank-icon-6 {
+    background-position: 0 -192px;
+}
+
+.bank-icon-3 {
+    background-position: 0 -224px;
+}
+
+.bank-icon-12 {
+    background-position: 0 -256px;
+}
+
+.bank-icon-4 {
+    background-position: 0 -288px;
+}
+
+.bank-icon-7 {
+    background-position: 0 -320px;
+}
+
+.bank-icon-5 {
+    background-position: 0 -352px;
+}
+
+.bank-icon-2 {
+    background-position: 0 -384px;
+}
+
+.paybtn {
+    display: block;
+    width: 136px;
+    height: 36px;
+    margin: 20px auto;
+    background: url(images/btn.png) 0 -63px no-repeat;
+    text-indent: -999999px;
 }

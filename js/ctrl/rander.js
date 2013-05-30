@@ -8,13 +8,20 @@ define(function(require, exports, module) {
     var loadPage = function(tplPath, eventReg) {
         require.async(tplPath, function(tpl) {
             // load page
-            $('#main').html(tpl);
-            // init event
-            if (eventReg !== undefined) {
-                require.async(eventReg, function(e) {
-                    e.init();
-                });
-            }
+            $('#page').addClass('page-end');
+            var speed = ($('#page').length === 0) ? 0 : 250;
+            setTimeout(function() {
+                $('#main').html(tpl);
+                if (speed === 250) {
+                    $('#page').addClass('page-start');
+                }
+                // init event
+                if (eventReg !== undefined) {
+                    require.async(eventReg, function(e) {
+                        e.init();
+                    });
+                }
+            }, speed);
         });
     };
     
