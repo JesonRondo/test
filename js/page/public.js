@@ -3,6 +3,27 @@ define(function(require, exports, module) {
     var Data = require('data');
     var userInfo = User.getUserInfo();
 
+    var refreshCostTip = function() {
+        var gid = $('#g-select-btn').attr('data-gid');
+
+        if (gid === undefined || gid === '')
+            return;
+
+        var allgames = Data.getAllGames();
+
+        var yuan = parseInt($('#costlist').find('.pay-list-radio:checked').attr('data-cost'), 10);
+
+        try {
+            
+            var money_rate = parseInt(allgames[gid].money_rate, 10);
+
+            var msg = '（' + yuan + '元人民币兑换' + yuan * money_rate + '《' + allgames[gid].name + '》元宝）';
+            $('#pay_tip').html(msg);
+        } catch(e) {
+            
+        }
+    };
+
     var refreshHistoryGame = function() {
         var lis = [];
         var history = userInfo.playHistory;
@@ -369,11 +390,17 @@ define(function(require, exports, module) {
             try {
                 var $g_select_btn = $('#g-select-btn');
                 $g_select_btn.html(allgames[id].name);
-                $g_select_btn.attr('data-gid', allgames[id].webgame_id);
+
+                var gid = allgames[id].webgame_id;
+
+                $g_select_btn.attr('data-gid', gid);
                 $('#g-cbox').removeClass('box-coverbox-show');
+
+                User.setUserInfo('g', gid);
                 
                 refreshHistorySvr();
                 refreshAllSvrs();
+                refreshCostTip();
             } catch(e) {
                 
             }
@@ -385,8 +412,13 @@ define(function(require, exports, module) {
 
             var $s_select_btn = $('#s-select-btn');
             $s_select_btn.html($this.html());
-            $s_select_btn.attr('data-sid', $this.attr('data-sid'));
+
+            var sid = $this.attr('data-sid');
+
+            $s_select_btn.attr('data-sid', sid);
             $('#s-cbox').removeClass('box-coverbox-show');
+
+            User.setUserInfo('s', sid);
         });
     };
 
@@ -397,6 +429,35 @@ define(function(require, exports, module) {
 
         $('#main').on('click', '#cost-custom-text', function() {
             $('#cost-custom').click();
+        }).on('keyup', function(e) {
+            var $cost_custom_text = $('#cost-custom-text');
+            var $cost_custom = $('#cost-custom');
+
+            var custom = parseInt($cost_custom_text.val(), 10);
+            var realcustom = $cost_custom.attr('data-cost');
+
+            var code = e.keyCode;
+
+            if (!(code >= 48 && code <= 57) && !(code >= 96 && code <= 105)
+             && code !== 46 && code !== 8
+             && !(code >= 37 && code <= 40) && !(code >= 16 && code <= 18)) { // not number & del & back & arrow & shift ctrl alt
+                $cost_custom_text.val(realcustom);
+            } else {
+                if (isNaN(custom)) {
+                    $cost_custom.attr('data-cost', '0');
+                    $cost_custom_text.val('0');
+                } else if (custom > 999999) {
+                    $cost_custom_text.val(realcustom);
+                } else {
+                    $cost_custom.attr('data-cost', custom);
+                    refreshCostTip();
+                }
+
+            }
+        });
+
+        $('#main').on('click', '.pay-list-radio', function() {
+            refreshCostTip();
         });
     };
 
@@ -407,5 +468,9 @@ define(function(require, exports, module) {
         initNavEvent();
         initSelectBtnEvent();
         initPublicEvent();
+    };
+
+    exports.refreshCostTip = function() {
+        refreshCostTip();
     };
 });

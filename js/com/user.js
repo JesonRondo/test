@@ -20,6 +20,10 @@ define(function(require, exports, module) {
         return userInfo;
     };
 
+    exports.setUserInfo = function(k, v) {
+        userInfo[k] = v;
+    };
+
     exports.setPlayHistory = function(obj) {
         userInfo.playHistory = obj;
     };
