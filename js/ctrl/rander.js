@@ -9,10 +9,12 @@ define(function(require, exports, module) {
         require.async(tplPath, function(tpl) {
             // load page
             $('#page').addClass('page-end');
-            var speed = ($('#page').length === 0) ? 0 : 250;
+
+            var _stepspeed = 150;
+            var speed = ($('#page').length === 0) ? 0 : _stepspeed;
             setTimeout(function() {
                 $('#main').html(tpl);
-                if (speed === 250) {
+                if (speed === _stepspeed) {
                     $('#page').addClass('page-start');
                 }
                 // init event

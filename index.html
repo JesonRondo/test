@@ -14,22 +14,40 @@
         </ul>
         <div class="box">
             <div class="box-tbtnbox">
-                <a href="javascript:;" class="gamebtn gamebtn-left">三国演义</a>
-                <a href="javascript:;" class="gamebtn gamebtn-right">32区(开天辟地)</a>
+                <a href="javascript:;" class="gamebtn gamebtn-left" id="g-select-btn">选择充值游戏</a>
+                <a href="javascript:;" class="gamebtn gamebtn-right" id="s-select-btn">选择游戏服务器</a>
+            </div>
+            <div class="box-coverbox" id="g-cbox">
+                <i class="box-coverbox-tip2 box-coverbox-tip-left">◆</i>
+                <i class="box-coverbox-tip box-coverbox-tip-left">◆</i>
+                <ul class="box-coverbox-tit clearfix" id="gbox-tit">
+                    <li><a href="javascript:;" class="box-coverbox-tit-a box-coverbox-tit-a-select" id="gbox-history-sbtn">最近玩过的游戏</a></li>
+                    <li><a href="javascript:;" class="box-coverbox-tit-a" id="gbox-allgames-sbtn">全部游戏</a></li>
+                </ul>
+                <div class="box-cover">
+                    <div class="box-covermain clearfix" id="gbox-main">
+                        <div class="box-covermain-sub" id="gbox-history-subbox"></div>
+                        <div class="box-covermain-sub" id="gbox-allgames-subbox"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-coverbox" id="s-cbox">
+                <i class="box-coverbox-tip2 box-coverbox-tip-right">◆</i>
+                <i class="box-coverbox-tip box-coverbox-tip-right">◆</i>
+                <ul class="box-coverbox-tit clearfix" id="sbox-tit">
+                    <li><a href="javascript:;" class="box-coverbox-tit-a box-coverbox-tit-a-select" id="sbox-history-sbtn">最近玩过的服务器</a></li>
+                    <li><a href="javascript:;" class="box-coverbox-tit-a" id="sbox-allsvrs-sbtn">全部服务器</a></li>
+                </ul>
+                <div class="box-cover">
+                    <div class="box-covermain clearfix" id="sbox-main">
+                        <div class="box-covermain-sub" id="sbox-history-subbox"></div>
+                        <div class="box-covermain-sub" id="sbox-allsvrs-subbox"></div>
+                    </div>
+                </div>
             </div>
             <div id="main" class="main"></div>
         </div>
     </div>
-
-<!-- 
-
-    <h2>选择游戏</h2>
-    <ul id="game_played_select"></ul>
-
-    <h2>充值方式</h2>
- -->
-
-
     <script id="seajsnode" src="js/sea.js" data-config="config" data-main="main"></script>
 </body>
 </html>

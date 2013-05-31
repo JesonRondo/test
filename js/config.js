@@ -4,6 +4,14 @@ seajs.config({
         'jquery': {
             src: 'lib/jquery.min.js',
             exports: 'jQuery'
+        },
+        'tinyscrollbar': {
+            src: 'lib/jquery.tinyscrollbar.min.js',
+            exports: 'tinyscrollbar'
+        },
+        'ktip': {
+            src: 'lib/jquery.ktip.min.js',
+            exports: 'ktip'
         }
     },
     alias: {
