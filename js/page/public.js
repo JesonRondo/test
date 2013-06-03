@@ -281,17 +281,6 @@ define(function(require, exports, module) {
         refreshCostTip();
     };
 
-    var initNavEvent = function() {
-        $('#nav').on('click', '.nav-li-a', function() {
-            var $this = $(this);
-            if ($this.hasClass('nav-li-a-select'))
-                return;
-
-            $('#nav').find('.nav-li-a-select').removeClass('nav-li-a-select');
-            $this.addClass('nav-li-a-select');
-        });
-    };
-
     var initSelectBtnEvent = function() {
         // game select btn
         $('#g-select-btn').on('click', function() {
@@ -684,7 +673,6 @@ define(function(require, exports, module) {
         refreshGameSelect();
         refreshGameSelectAll();
 
-        initNavEvent();
         initSelectBtnEvent();
         initPublicEvent();
     };

@@ -34,6 +34,7 @@ define(function(require, exports, module) {
         }
 
         if (pages[hash] !== undefined) {
+            $('#nav').find('.nav-li-a-select').removeClass('nav-li-a-select');
             $('#nav').find('.nav-li-a').eq(pages[hash].nav).addClass('nav-li-a-select');
             loadPage(pages[hash].tpl, pages[hash].e);
         }
