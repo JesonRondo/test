@@ -7,7 +7,7 @@ define(function(require, exports, module) {
     var roles = '';
 
     var refreshCostTip = function() {
-        var gid = $('#g-select-btn').attr('data-gid');
+        var gid = userInfo.g;
 
         if (gid === undefined || gid === '')
             return;
