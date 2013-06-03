@@ -61,75 +61,10 @@ define(function(require, exports, module) {
         createBanklist();
     };
 
-    var initSubmit = function() {
-        $('#paybtn').on('click', function() {
-            var userinfo = User.getUserInfo();
-
-            $('#bank_form_passport_mainname').val(userinfo.pp);
-
-            // gid
-            if (userinfo.g === '0') {
-                require.async('ktip', function() {
-                    $('#g-select-btn').ktip('请选择需要充值的游戏', {
-                        direction: 'top',
-                        offset: 75,
-                        atX: 100,
-                        atY: 36,
-                        closeBtn: false,
-                        stick: 2000
-                    });
-                });
-                return;
-            }
-            $('#bank_form_webgame_id').val(userinfo.g);
-            $('#bank_form_webgame_name').val($('#g-select-btn').html());
-
-            // sid
-            if (userinfo.s === '0') {
-                require.async('ktip', function() {
-                    $('#s-select-btn').ktip('请选择游戏服务器', {
-                        direction: 'top',
-                        offset: 65,
-                        atX: 100,
-                        atY: 36,
-                        closeBtn: false,
-                        stick: 2000
-                    });
-                });
-                return;
-            }
-            $('#bank_form_webgame_serverid').val(userinfo.s);
-            $('#bank_form_webgame_servername').val($('#s-select-btn').html());
-
-            // amount
-            var amount = parseInt($('#costlist').find('.pay-list-radio:checked').attr('data-cost'), 10);
-            if (isNaN(amount) || amount < 10 || amount > 100000) {
-                require.async('ktip', function() {
-                    $('#cost-custom-text').ktip('请输入10至100000之间任意的整数', {
-                        direction: 'left',
-                        offset: 17,
-                        atX: -3,
-                        atY: 10,
-                        closeBtn: false,
-                        stick: 2000
-                    });
-                });
-                return;
-            }
-            $('#bank_form_pay_amount').val(amount);
-
-            // bank
-            var bank = $('#banklist').find('.pay-list-radio:checked').attr('data-bankid');
-            $('#bank_form_platform_sub_id').val(bank);
-
-            $('#bank_form').submit();
-        });
-    };
-
     exports.init = function() {
         initPage();
         Public.refreshCostTip();
 
-        initSubmit();
+        Public.initSubmit();
     };
 });

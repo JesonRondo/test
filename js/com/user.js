@@ -3,7 +3,7 @@ define(function(require, exports, module) {
 
     var userInfo = {
         uid: '243355955',
-        pp: 'longzhou929',
+        pp: 'longzhou214',
         g: '',
         s: '',
         playHistory: {}

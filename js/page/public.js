@@ -14,10 +14,9 @@ define(function(require, exports, module) {
         var yuan = parseInt($('#costlist').find('.pay-list-radio:checked').attr('data-cost'), 10);
 
         try {
-            
             var money_rate = parseInt(allgames[gid].money_rate, 10);
 
-            var msg = '（' + yuan + '元人民币兑换' + yuan * money_rate + '《' + allgames[gid].name + '》元宝）';
+            var msg = '（' + yuan + '元人民币兑换《' + allgames[gid].name + '》<span id="pay_tip_amount">' + yuan * money_rate + '元宝</span>）';
             $('#pay_tip').html(msg);
         } catch(e) {
             
@@ -398,6 +397,8 @@ define(function(require, exports, module) {
 
                 User.setUserInfo('g', gid);
                 
+                $('#s-select-btn').attr('data-sid', '').html('选择游戏服务器');
+                User.setUserInfo('s', '0');
                 refreshHistorySvr();
                 refreshAllSvrs();
                 refreshCostTip();
@@ -458,6 +459,144 @@ define(function(require, exports, module) {
 
         $('#main').on('click', '.pay-list-radio', function() {
             refreshCostTip();
+        });
+    };
+
+    var confirmBox = function(type) {
+        var closeBox = function() {
+            $('#dialog-mask').remove();
+            $('#dialog').remove();
+        };
+        closeBox();
+
+        var $box = [];
+
+        // head
+        $box.push('<div class="dialog-mask" id="dialog-mask"></div>');
+        $box.push('<div class="dialog" id="dialog">');
+        $box.push('<h5 class="dialog-tit">');
+        $box.push('充值订单确认');
+        $box.push('<a href="javascript:;" class="dialog-close closebtn">×</a>');
+        $box.push('</h5>');
+        $box.push('<div class="dialog-main">');
+    
+        // main
+        switch(type) {
+            case 'charge_info':
+                $box.push('<dl class="dialog-main-sheet">');
+                $box.push('<dt>充值帐号:</dt>');
+                $box.push('<dd>' + $('#payform_passport_mainname').val() + '</dd>');
+                $box.push('<dt>充值方式:</dt>');
+                $box.push('<dd>' + $('#payform_platform_name').val() + '</dd>');
+                $box.push('<dt>充值游戏:</dt>');
+                $box.push('<dd>' + $('#payform_webgame_name').val() + ' ' + $('#payform_webgame_servername').val() + '</dd>');
+                $box.push('<dt>充值金额:</dt>');
+                $box.push('<dd>' + $('#payform_pay_amount').val() + '元</dd>');
+                $box.push('<dt>兑换游戏币:</dt>');
+                $box.push('<dd>' + $('#pay_tip_amount').html() + '</dd>');
+                $box.push('</dl>');
+                break;
+            case 'charge_ing':
+                $box.push('<h5 class="dialog-main-tit">请在新打开的页面中完成充值支付！</h5>');
+                $box.push('<p>付款前请不要关闭或刷新此页面。</p>');
+                $box.push('<p>如果付款遇到问题，请联系<a href="javascript:;" class="orangelink" target="_blank">在线客服</a></p>');
+                break;
+        }
+
+        // foot
+        $box.push('</div>');
+        $box.push('<div class="dialog-footer">');
+        switch(type) {
+            case 'charge_info':
+                $box.push('<a href="javascript:;" class="dialog-btn dialog-btn-light ml45 submitbtn">确认提交</a>');
+                $box.push('<a href="javascript:;" class="dialog-btn dialog-btn-dark ml20 closebtn">返回修改</a>');
+                break;
+            case 'charge_ing':
+                $box.push('<a href="javascript:;" class="dialog-btn dialog-btn-light ml45">查看充值结果</a>');
+                $box.push('<a href="javascript:;" class="dialog-btn dialog-btn-dark ml20 closebtn">返&nbsp;&nbsp;回</a>');
+                break;
+        }
+        $box.push('</div>');
+
+        $('body').append($box.join(''));
+
+        // event
+        $('#dialog').on('click', '.submitbtn', function() {
+            confirmBox('charge_ing');
+            setTimeout(function() {
+                $('#payform').submit();
+            }, 500);
+        });
+        $('#dialog').on('click', '.closebtn', function() {
+            closeBox();
+        });
+    };
+
+    exports.initSubmit = function() {
+        $('#paybtn').on('click', function() {
+            var userinfo = User.getUserInfo();
+
+            $('#payform_passport_mainname').val(userinfo.pp);
+
+            // gid
+            if (userinfo.g === '0') {
+                require.async('ktip', function() {
+                    $('#g-select-btn').ktip('请选择需要充值的游戏', {
+                        direction: 'top',
+                        offset: 75,
+                        atX: 100,
+                        atY: 36,
+                        closeBtn: false,
+                        stick: 2000
+                    });
+                });
+                return;
+            }
+            $('#payform_webgame_id').val(userinfo.g);
+            $('#payform_webgame_name').val($('#g-select-btn').html());
+
+            // sid
+            if (userinfo.s === '0') {
+                require.async('ktip', function() {
+                    $('#s-select-btn').ktip('请选择游戏服务器', {
+                        direction: 'top',
+                        offset: 65,
+                        atX: 100,
+                        atY: 36,
+                        closeBtn: false,
+                        stick: 2000
+                    });
+                });
+                return;
+            }
+            $('#payform_webgame_serverid').val(userinfo.s);
+            $('#payform_webgame_servername').val($('#s-select-btn').html());
+
+            // amount
+            var amount = parseInt($('#costlist').find('.pay-list-radio:checked').attr('data-cost'), 10);
+            if (isNaN(amount) || amount < 10 || amount > 100000) {
+                require.async('ktip', function() {
+                    $('#cost-custom-text').ktip('请输入10至100000之间任意的整数', {
+                        direction: 'left',
+                        offset: 17,
+                        atX: -3,
+                        atY: 10,
+                        closeBtn: false,
+                        stick: 2000
+                    });
+                });
+                return;
+            }
+            $('#payform_pay_amount').val(amount);
+
+            // bank
+            var $banklist = $('#banklist');
+            if ($banklist.length !== 0) {
+                var bank = $banklist.find('.pay-list-radio:checked').attr('data-bankid');
+                $('#payform_platform_sub_id').val(bank);
+            }
+
+            confirmBox('charge_info');
         });
     };
 

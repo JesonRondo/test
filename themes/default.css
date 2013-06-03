@@ -9,6 +9,7 @@ p,
 ul,
 ol,
 li,
+dd,
 input {
     margin: 0;
     padding: 0;
@@ -40,7 +41,9 @@ a {
     outline: 0;
 }
 
-body {
+body,
+html {
+    height: 100%;
     background: #FFF;
 }
 
@@ -79,6 +82,19 @@ body {
 
 .w100 {
     width: 100%;
+}
+
+.ml20 {
+    margin-left: 20px;
+}
+
+.ml45 {
+    margin-left: 45px;
+}
+
+.orangelink {
+    color: #F60;
+    text-decoration: underline;
 }
 
 .nav {
@@ -335,6 +351,7 @@ body {
 }
 
 .box-coverbox-tit {
+    padding-bottom: 2px;
     background: url(images/coverbox-hr.png) center bottom no-repeat;
 }
 
@@ -351,7 +368,7 @@ body {
 }
 
 .box-coverbox-tit-a-select {
-    background: url(images/btn.png) 0 -117px no-repeat;
+    background: url(images/btn.png) 0 -115px no-repeat;
     color: #F60;
 }
 
@@ -562,4 +579,126 @@ body {
 .ktip-tipbox.default a:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+.dialog-mask {
+    position: fixed;
+    _position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #FFF;
+    z-index: 10001;
+    opacity: .6;
+    _filter: alpha(opacity=60);
+}
+
+.dialog {
+    position: absolute;
+    left: 50%;
+    top: 55px;
+    width: 350px;
+    height: 240px;
+    margin-left: -125px;
+    padding: 1px;
+    border: 1px solid #CCC;
+    background: #FFF;
+    z-index: 10002;
+    border-radius: 3px;
+}
+
+.dialog-tit {
+    position: relative;
+    border: 1px solid #DC4839;
+    background: #F90 url(images/dia_tit.png) center 0 no-repeat;
+    color: #FFF;
+    font: normal 16px/2 'Microsoft YaHei';
+    text-align: center;
+    border-radius: 3px;
+    text-shadow: 1px 1px rgba(0,0,0,.2);
+}
+
+.dialog-close {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    margin-top: -6px;
+    color: #FFF;
+    font: normal 14px/1 'SimSun';
+    text-shadow: none;
+}
+
+.dialog-close:hover {
+    text-shadow: 0 0 5px #FFF;
+}
+
+.dialog-main {
+    padding: 15px 10px;
+}
+
+.dialog-main-sheet,
+.dialog-footer {
+    font-size: 0;
+    letter-spacing: 0;
+}
+
+.dialog-main-sheet dt,
+.dialog-main-sheet dd {
+    display: inline-block;
+    font: normal 12px/26px 'SimSun';
+}
+
+.dialog-main-sheet dt {
+    width: 25%;
+    color: #666;
+    font-weight: bold;
+    text-align: right;
+}
+
+.dialog-main-sheet dd {
+    width: 70%;
+    padding: 0 2.5%;
+    color: #666;
+    text-align: left;
+}
+
+.dialog-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 35px;
+    padding: 10px 0;
+    border-top: 1px dashed #EEE;
+}
+
+.dialog-btn {
+    display: inline-block;
+    width: 118px;
+    color: #FFF;
+    font: normal 14px/35px 'SimSun';
+    text-align: center;
+}
+
+.dialog-btn:hover {
+    opacity: .8;
+}
+
+.dialog-btn-light {
+    background: #F90 url(images/btn.png) 0 -155px no-repeat;
+}
+
+.dialog-btn-dark {
+    background: #F90 url(images/btn.png) 0 -195px no-repeat;
+}
+
+.dialog-main-tit {
+    color: #F60;
+    font: normal 16px/4 'Microsoft YaHei';
+    text-align: center;
+}
+
+.dialog-main p {
+    font: normal 12px/2 'SimSun';
+    text-align: center;
 }

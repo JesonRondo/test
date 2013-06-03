@@ -26,5 +26,7 @@ define(function(require, exports, module) {
     exports.init = function() {
         initPage();
         Public.refreshCostTip();
+
+        Public.initSubmit();
     };
 });

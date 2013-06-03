@@ -1,4 +1,5 @@
 define(function(require, exports, module) {
+    var User = require('user');
     var Public = require('public');
 
     var costlist = [10, 20, 30, 50, 100, 200, 300, 500, 1000, 3000, 5000, 10000, 20000];
@@ -32,5 +33,7 @@ define(function(require, exports, module) {
     exports.init = function() {
         initPage();
         Public.refreshCostTip();
+
+        Public.initSubmit();
     };
 });
