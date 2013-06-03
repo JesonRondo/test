@@ -72,6 +72,10 @@ html {
     background: #EBEBEB;
 }
 
+.red {
+    color: red;
+}
+
 .w20 {
     width: 20%;
 }
@@ -90,6 +94,14 @@ html {
 
 .ml45 {
     margin-left: 45px;
+}
+
+.ml115 {
+    margin-left: 115px;
+}
+
+.mt20 {
+    margin-top: 20px;
 }
 
 .orangelink {
@@ -646,7 +658,7 @@ html {
 .dialog-main-sheet dt,
 .dialog-main-sheet dd {
     display: inline-block;
-    font: normal 12px/26px 'SimSun';
+    font: normal 12px/22px 'SimSun';
 }
 
 .dialog-main-sheet dt {
@@ -698,7 +710,20 @@ html {
     text-align: center;
 }
 
-.dialog-main p {
+.dialog-main-p1 {
     font: normal 12px/2 'SimSun';
     text-align: center;
+}
+
+.dialog-main-p2 {
+    font: normal 12px/2 'SimSun';
+    text-align: left;
+}
+
+.dialog-main-err {
+    float: left;
+    height: 100px;
+    width: 100px;
+    margin: 10px;
+    background: url(images/unsmile.png) center center no-repeat;
 }

@@ -3,6 +3,9 @@ define(function(require, exports, module) {
     var Data = require('data');
     var userInfo = User.getUserInfo();
 
+    // tmp cache
+    var roles = '';
+
     var refreshCostTip = function() {
         var gid = $('#g-select-btn').attr('data-gid');
 
@@ -37,7 +40,7 @@ define(function(require, exports, module) {
         lis = lis.join('');
 
         if (count > 20) {
-            var scroll_id = 'scrollbar' + Date.parse(new Date());
+            var scroll_id = 'scrollbar' + Date.parse(new Date()) + parseInt(Math.random() * 10000, 10);
 
             var outer = [];
             outer.push('<div class="mscrollbar" id="' + scroll_id + '"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div><div class="bom"></div></div></div></div><div class="viewport"><div class="overview">');
@@ -53,7 +56,7 @@ define(function(require, exports, module) {
 
     var refreshHistorySvr = function() {
         var history = userInfo.playHistory;
-        var webgame_id = $('#g-select-btn').attr('data-gid');
+        var webgame_id = userInfo.g;
         var count = 0;
 
         if (history[webgame_id] !== undefined) {
@@ -69,7 +72,7 @@ define(function(require, exports, module) {
             lis = lis.join('');
 
             if (count > 16) {
-                var scroll_id = 'scrollbar' + Date.parse(new Date());
+                var scroll_id = 'scrollbar' + Date.parse(new Date()) + parseInt(Math.random() * 10000, 10);
 
                 var outer = [];
                 outer.push('<div class="mscrollbar" id="' + scroll_id + '"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div><div class="bom"></div></div></div></div><div class="viewport"><div class="overview">');
@@ -100,7 +103,7 @@ define(function(require, exports, module) {
         lis = lis.join('');
 
         if (count > 20) {
-            var scroll_id = 'scrollbar' + Date.parse(new Date());
+            var scroll_id = 'scrollbar' + Date.parse(new Date()) + parseInt(Math.random() * 10000, 10);
 
             var outer = [];
             outer.push('<div class="mscrollbar" id="' + scroll_id + '"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div><div class="bom"></div></div></div></div><div class="viewport"><div class="overview">');
@@ -118,17 +121,26 @@ define(function(require, exports, module) {
     var randeAllSvrs = function(svrs) {
         var lis = [];
         var count = 0;
+        var s_sid = userInfo.s; // auto select sid
 
         lis.push('<ul class="box-coverbox-list clearfix">');
         for (var k in svrs) {
-            lis.push('<li class="w25"><a href="javascript:;" class="box-coverbox-list-a" data-sid="' + svrs[k].id + '">' + svrs[k].name + '(' + svrs[k].id + '区)</a></li>');
+            var cur_sid = svrs[k].id;
+
+            lis.push('<li class="w25"><a href="javascript:;" class="box-coverbox-list-a" data-sid="' + cur_sid + '">' + svrs[k].name + '(' + cur_sid + '区)</a></li>');
             count++;
+
+            if (s_sid === cur_sid) {
+                var $s_select_btn = $('#s-select-btn');
+                $s_select_btn.html(svrs[k].name);
+                $s_select_btn.attr('data-sid', s_sid);
+            }
         }
         lis.push('</ul>');
         lis = lis.join('');
 
         if (count > 16) {
-            var scroll_id = 'scrollbar' + Date.parse(new Date());
+            var scroll_id = 'scrollbar' + Date.parse(new Date()) + parseInt(Math.random() * 10000, 10);
 
             var outer = [];
             outer.push('<div class="mscrollbar" id="' + scroll_id + '"><div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div><div class="bom"></div></div></div></div><div class="viewport"><div class="overview">');
@@ -145,7 +157,7 @@ define(function(require, exports, module) {
     };
 
     var refreshAllSvrs = function() {
-        var webgame_id = $('#g-select-btn').attr('data-gid');
+        var webgame_id = userInfo.g;
         var svrs = Data.getSvrs(webgame_id);
 
         if (svrs === undefined) {
@@ -209,6 +221,8 @@ define(function(require, exports, module) {
                     User.setPlayHistory(history);
                     userInfo = User.getUserInfo();
 
+                    initSidSelectBtn();
+
                     refreshHistoryGame();
                 }
             }
@@ -232,12 +246,39 @@ define(function(require, exports, module) {
                         var cur_obj = data[k];
                         allgames[cur_obj.webgame_id] = cur_obj;
                     }
+
+                    // auto select gid & sid
+                    var $g_select_btn = $('#g-select-btn');
+                    var gid = userInfo.g;
+                    try {
+                        if (allgames[gid] !== undefined) {
+                            $g_select_btn.html(allgames[gid].name);
+                            $g_select_btn.attr('data-gid', gid);
+                        }
+                    } catch(e) {
+
+                    }
+
                     // refresh cache data
                     Data.setAllGames(allgames);
                     refreshAllGames();
                 }
             }
         });
+    };
+
+    var refreshSidSelectBtn = function() {
+        $('#s-select-btn').attr('data-sid', '').html('选择游戏服务器');
+        User.setUserInfo('s', '0');
+        refreshHistorySvr();
+        refreshAllSvrs();
+        refreshCostTip();
+    };
+
+    var initSidSelectBtn = function() {
+        refreshHistorySvr();
+        refreshAllSvrs();
+        refreshCostTip();
     };
 
     var initNavEvent = function() {
@@ -397,11 +438,7 @@ define(function(require, exports, module) {
 
                 User.setUserInfo('g', gid);
                 
-                $('#s-select-btn').attr('data-sid', '').html('选择游戏服务器');
-                User.setUserInfo('s', '0');
-                refreshHistorySvr();
-                refreshAllSvrs();
-                refreshCostTip();
+                refreshSidSelectBtn();
             } catch(e) {
                 
             }
@@ -478,7 +515,7 @@ define(function(require, exports, module) {
         $box.push('充值订单确认');
         $box.push('<a href="javascript:;" class="dialog-close closebtn">×</a>');
         $box.push('</h5>');
-        $box.push('<div class="dialog-main">');
+        $box.push('<div class="dialog-main clearfix">');
     
         // main
         switch(type) {
@@ -490,6 +527,8 @@ define(function(require, exports, module) {
                 $box.push('<dd>' + $('#payform_platform_name').val() + '</dd>');
                 $box.push('<dt>充值游戏:</dt>');
                 $box.push('<dd>' + $('#payform_webgame_name').val() + ' ' + $('#payform_webgame_servername').val() + '</dd>');
+                $box.push('<dt>角色名称:</dt>');
+                $box.push('<dd>' + roles + '</dd>');
                 $box.push('<dt>充值金额:</dt>');
                 $box.push('<dd>' + $('#payform_pay_amount').val() + '元</dd>');
                 $box.push('<dt>兑换游戏币:</dt>');
@@ -498,8 +537,14 @@ define(function(require, exports, module) {
                 break;
             case 'charge_ing':
                 $box.push('<h5 class="dialog-main-tit">请在新打开的页面中完成充值支付！</h5>');
-                $box.push('<p>付款前请不要关闭或刷新此页面。</p>');
-                $box.push('<p>如果付款遇到问题，请联系<a href="javascript:;" class="orangelink" target="_blank">在线客服</a></p>');
+                $box.push('<p class="dialog-main-p1">付款前请不要关闭或刷新此页面。</p>');
+                $box.push('<p class="dialog-main-p1">如果付款遇到问题，请联系<a href="javascript:;" class="orangelink" target="_blank">在线客服</a></p>');
+                break;
+            case 'empty_role':
+                $box.push('<div class="dialog-main-err"></div>');
+                $box.push('<p class="dialog-main-p2 red mt20">对不起!</p>');
+                $box.push('<p class="dialog-main-p2">您尚未在该游戏服务器内创建角色</p>');
+                $box.push('<p class="dialog-main-p2">不能进行充值！</p>');
                 break;
         }
 
@@ -515,6 +560,9 @@ define(function(require, exports, module) {
                 $box.push('<a href="javascript:;" class="dialog-btn dialog-btn-light ml45">查看充值结果</a>');
                 $box.push('<a href="javascript:;" class="dialog-btn dialog-btn-dark ml20 closebtn">返&nbsp;&nbsp;回</a>');
                 break;
+            case 'empty_role':
+                $box.push('<a href="javascript:;" class="dialog-btn dialog-btn-light ml115 closebtn">返回修改</a>');
+                break;
         }
         $box.push('</div>');
 
@@ -523,9 +571,7 @@ define(function(require, exports, module) {
         // event
         $('#dialog').on('click', '.submitbtn', function() {
             confirmBox('charge_ing');
-            setTimeout(function() {
-                $('#payform').submit();
-            }, 500);
+            $('#payform').submit();
         });
         $('#dialog').on('click', '.closebtn', function() {
             closeBox();
@@ -596,7 +642,41 @@ define(function(require, exports, module) {
                 $('#payform_platform_sub_id').val(bank);
             }
 
-            confirmBox('charge_info');
+            // ckeck player
+            // var url = '/index.php/webgame/getRole/';
+            var url = '/role.json';
+            var data = {
+                'uid': userinfo.uid,
+                'pp': userinfo.pp,
+                'webgame_id': userinfo.g,
+                'webgame_serverid': userinfo.s
+            };
+            $.ajax({
+                url: url,
+                data: data,
+                dataType: 'json',
+                success: function(json) {
+                    if (json.status === 1) {
+                        var roles_data = json.data;
+                        var roles_num = roles_data.length;
+                        
+                        if (roles_num <= 0) { // no roles
+                            confirmBox('empty_role');
+                            return;
+                        }
+
+                        if (roles_num > 3) roles_num = 3;
+
+                        roles = [];
+                        for (var i = 0; i < roles_num; i++) {
+                            roles.push(roles_data[i]);
+                        }
+                        roles = roles.join(', ');
+                        confirmBox('charge_info');
+                    }
+                }
+            });
+
         });
     };
 
