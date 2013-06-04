@@ -9,7 +9,7 @@ define(function(require, exports, module) {
     var refreshCostTip = function() {
         var gid = userInfo.g;
 
-        if (gid === undefined || gid === '')
+        if (gid === undefined || gid === '' || gid === '0')
             return;
 
         var allgames = Data.getAllGames();
@@ -262,6 +262,7 @@ define(function(require, exports, module) {
                     // refresh cache data
                     Data.setAllGames(allgames);
                     refreshAllGames();
+                    refreshCostTip();
                 }
             }
         });
@@ -278,12 +279,11 @@ define(function(require, exports, module) {
     var initSidSelectBtn = function() {
         refreshHistorySvr();
         refreshAllSvrs();
-        refreshCostTip();
     };
 
     var initSelectBtnEvent = function() {
         // game select btn
-        $('#g-select-btn').on('click', function() {
+        $('#g-select-btn').on('click', function(e) {
             var $gcbox = $('#g-cbox');
             var $scbox = $('#s-cbox');
 
@@ -316,6 +316,8 @@ define(function(require, exports, module) {
             }).on('mouseenter', function() {
                 clearTimeout(t);
             });
+
+            e.preventDefault();
         });
 
         // game slide title
@@ -340,7 +342,7 @@ define(function(require, exports, module) {
         });
 
         // server select btn
-        $('#s-select-btn').on('click', function() {
+        $('#s-select-btn').on('click', function(e) {
             var webgame_id = $('#g-select-btn').attr('data-gid');
             if (webgame_id === undefined || webgame_id === '') {
                 require.async('ktip', function() {
@@ -353,6 +355,7 @@ define(function(require, exports, module) {
                         stick: 2000
                     });
                 });
+                e.preventDefault();
                 return;
             }
 
@@ -388,6 +391,8 @@ define(function(require, exports, module) {
             }).on('mouseenter', function() {
                 clearTimeout(t);
             });
+
+            e.preventDefault();
         });
 
         // server slide title
@@ -482,8 +487,10 @@ define(function(require, exports, module) {
 
             }
         });
+    };
 
-        $('#main').on('click', '.pay-list-radio', function() {
+    var resetEvent = function() {
+        $('#costlist').off('click').on('click', '.pay-list-radio', function() {
             refreshCostTip();
         });
     };
@@ -516,8 +523,12 @@ define(function(require, exports, module) {
                 $box.push('<dd>' + $('#payform_platform_name').val() + '</dd>');
                 $box.push('<dt>充值游戏:</dt>');
                 $box.push('<dd>' + $('#payform_webgame_name').val() + ' ' + $('#payform_webgame_servername').val() + '</dd>');
-                $box.push('<dt>角色名称:</dt>');
-                $box.push('<dd>' + roles + '</dd>');
+                
+                if (roles !== '') {
+                    $box.push('<dt>角色名称:</dt>');
+                    $box.push('<dd>' + roles + '</dd>');
+                }
+                
                 $box.push('<dt>充值金额:</dt>');
                 $box.push('<dd>' + $('#payform_pay_amount').val() + '元</dd>');
                 $box.push('<dt>兑换游戏币:</dt>');
@@ -568,7 +579,7 @@ define(function(require, exports, module) {
     };
 
     exports.initSubmit = function() {
-        $('#paybtn').on('click', function() {
+        $('#paybtn').on('click', function(e) {
             var userinfo = User.getUserInfo();
 
             $('#payform_passport_mainname').val(userinfo.pp);
@@ -585,6 +596,7 @@ define(function(require, exports, module) {
                         stick: 2000
                     });
                 });
+                e.preventDefault();
                 return;
             }
             $('#payform_webgame_id').val(userinfo.g);
@@ -602,6 +614,7 @@ define(function(require, exports, module) {
                         stick: 2000
                     });
                 });
+                e.preventDefault();
                 return;
             }
             $('#payform_webgame_serverid').val(userinfo.s);
@@ -620,6 +633,7 @@ define(function(require, exports, module) {
                         stick: 2000
                     });
                 });
+                e.preventDefault();
                 return;
             }
             $('#payform_pay_amount').val(amount);
@@ -648,11 +662,6 @@ define(function(require, exports, module) {
                     if (json.status === 1) {
                         var roles_data = json.data;
                         var roles_num = roles_data.length;
-                        
-                        if (roles_num <= 0) { // no roles
-                            confirmBox('empty_role');
-                            return;
-                        }
 
                         if (roles_num > 3) roles_num = 3;
 
@@ -662,10 +671,13 @@ define(function(require, exports, module) {
                         }
                         roles = roles.join(', ');
                         confirmBox('charge_info');
+                    } else {
+                        confirmBox('empty_role');
                     }
                 }
             });
 
+            e.preventDefault();
         });
     };
 
@@ -677,7 +689,8 @@ define(function(require, exports, module) {
         initPublicEvent();
     };
 
-    exports.refreshCostTip = function() {
+    exports.reSet = function() {
         refreshCostTip();
+        resetEvent();
     };
 });

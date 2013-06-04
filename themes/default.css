@@ -128,6 +128,7 @@ html {
     color: #AAA;
     font: normal 14px/36px 'SimSun';
     text-align: center;
+    _zoom: 1;
 }
 
 .nav-li-a-select {
@@ -164,7 +165,7 @@ html {
 }
 
 .page-start {
-    -webkit-animation: page-start-animate .15s linear;
+    /*-webkit-animation: page-start-animate .15s linear;*/
 }
 
 @-webkit-keyframes page-end-animate {
@@ -178,7 +179,7 @@ html {
 }
 
 .page-end {
-    -webkit-animation: page-end-animate .15s linear;
+    /*-webkit-animation: page-end-animate .15s linear;*/
 }
 
 .gamebtn {
@@ -259,6 +260,11 @@ html {
     font: normal 14px/48px 'Microsoft YaHei';
 }
 
+.cost-a {
+    display: inline-block;
+    line-height: 32px;
+}
+
 .bank-icon {
     display: inline-block;
     padding-left: 32px;
@@ -334,10 +340,10 @@ html {
 .box-coverbox {
     display: none;
     position: absolute;
-    left: 50%;
+    left: 30px;
+    _left: 0;
     top: 60px;
     width: 548px;
-    margin-left: -274px;
     border: 1px solid #CCC;
     background: #EBEBEB;
     background: rgba(235,235,235,.9);
@@ -395,6 +401,7 @@ html {
 }
 
 .box-cover {
+    _width: 548px;
     *position: relative;
     overflow: hidden;
 }

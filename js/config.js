@@ -7,11 +7,11 @@ seajs.config({
         },
         'tinyscrollbar': {
             src: 'lib/jquery.tinyscrollbar.min.js',
-            exports: 'tinyscrollbar'
+            deps: ['jquery']
         },
         'ktip': {
             src: 'lib/jquery.ktip.min.js',
-            exports: 'ktip'
+            deps: ['jquery']
         }
     },
     alias: {

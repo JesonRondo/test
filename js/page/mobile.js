@@ -9,7 +9,7 @@ define(function(require, exports, module) {
         for (var i = 0, len = costlist.length; i < len; i++) {
             lis.push('<li class="pay-list-li w20">');
             lis.push('<input type="radio" name="cost" class="pay-list-radio" id="cost-' + costlist[i] + '" data-cost="' + costlist[i] + '" />');
-            lis.push('<label for="cost-' + costlist[i] + '">' + costlist[i] + '元</label>');
+            lis.push('<label for="cost-' + costlist[i] + '" class="cost-a">' + costlist[i] + '元</label>');
             lis.push('</li>');
         }
 
@@ -25,7 +25,7 @@ define(function(require, exports, module) {
 
     exports.init = function() {
         initPage();
-        Public.refreshCostTip();
+        Public.reSet();
 
         Public.initSubmit();
     };
