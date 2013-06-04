@@ -104,6 +104,10 @@ html {
     margin-top: 20px;
 }
 
+.pt20 {
+    padding-top: 20px;
+}
+
 .orangelink {
     color: #F60;
     text-decoration: underline;
@@ -391,6 +395,7 @@ html {
 }
 
 .box-cover {
+    *position: relative;
     overflow: hidden;
 }
 

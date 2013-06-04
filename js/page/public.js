@@ -509,7 +509,7 @@ define(function(require, exports, module) {
         // main
         switch(type) {
             case 'charge_info':
-                $box.push('<dl class="dialog-main-sheet">');
+                $box.push('<dl class="dialog-main-sheet clearfix">');
                 $box.push('<dt>充值帐号:</dt>');
                 $box.push('<dd>' + $('#payform_passport_mainname').val() + '</dd>');
                 $box.push('<dt>充值方式:</dt>');
@@ -531,7 +531,7 @@ define(function(require, exports, module) {
                 break;
             case 'empty_role':
                 $box.push('<div class="dialog-main-err"></div>');
-                $box.push('<p class="dialog-main-p2 red mt20">对不起!</p>');
+                $box.push('<p class="dialog-main-p2 red pt20">对不起!</p>');
                 $box.push('<p class="dialog-main-p2">您尚未在该游戏服务器内创建角色</p>');
                 $box.push('<p class="dialog-main-p2">不能进行充值！</p>');
                 break;

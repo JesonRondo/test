@@ -12,15 +12,17 @@ define(function(require, exports, module) {
     exports.init = function() {
         var qsobj = Util.getQueryString();
 
-        var url = '/index.php/api/userInfoByUtk/';
+        // var url = '/index.php/api/userInfoByUtk/';
+        var url = '/user.json';
         var data = null;
         $.ajax({
             url: url,
             data: data,
             async: false,
+            type: 'GET',
             dataType: 'json',
             success: function(json) {
-                if (json.status === 1) {    // format
+                if (json.code === 1) {    // format
                     var data = json.data;
                     userInfo['uid'] = data.uid;
                     userInfo['pp'] = data.passport;

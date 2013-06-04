@@ -126,6 +126,7 @@ html {
 
 .pager {
     float: right;
+    *margin-bottom: 10px;
 }
 
 .pager li {
@@ -208,7 +209,7 @@ html {
 }
 
 .infobox-sheet {
-    width: 45%;
+    width: 50%;
     margin: 0 auto;
     padding: 10px 0;
     font-size: 0;
@@ -217,7 +218,7 @@ html {
 
 .infobox-sheet dt,
 .infobox-sheet dd {
-    display: inline-block;
+    float: left;
     font: normal 12px/26px 'SimSun';
 }
 
@@ -230,7 +231,7 @@ html {
 
 .infobox-sheet dd {
     width: 70%;
-    padding: 0 2.5%;
+    padding: 0 2%;
     color: #666;
     text-align: left;
 }
