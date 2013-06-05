@@ -12,8 +12,7 @@ define(function(require, exports, module) {
     exports.init = function() {
         var qsobj = Util.getQueryString();
 
-        // var url = '/index.php/api/userInfoByUtk/';
-        var url = '/user.json';
+        var url = '/index.php/api/userInfoByUtk/';
         var data = null;
         $.ajax({
             url: url,

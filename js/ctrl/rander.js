@@ -1,8 +1,8 @@
 define(function(require, exports, module) {
     var pages = {
-        '#bank'  : {'tpl': '../../tpl/bank.html',   'e': 'e_bank'  ,'nav': 0},
-        '#alipay': {'tpl': '../../tpl/alipay.html', 'e': 'e_alipay','nav': 1},
-        '#mobile': {'tpl': '../../tpl/mobile.html', 'e': 'e_mobile','nav': 2}
+        '#bank'  : {'tpl': '/pay/tpl/bank.html',   'e': 'e_bank'  ,'nav': 0},
+        '#alipay': {'tpl': '/pay/tpl/alipay.html', 'e': 'e_alipay','nav': 1},
+        '#mobile': {'tpl': '/pay/tpl/mobile.html', 'e': 'e_mobile','nav': 2}
     };
 
     var loadPage = function(tplPath, eventReg) {
